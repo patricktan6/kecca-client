@@ -4,8 +4,8 @@ import "./App.css";
 
 // Pages
 import Home from "./pages/home";
-import Login from "./pages/login";
-import Signup from "./pages/signup";
+import login from "./pages/login";
+import signup from "./pages/signup";
 
 // Components
 import Navbar from "./components/Navbar";
@@ -20,6 +20,9 @@ const theme = createMuiTheme({
     primary: blue,
     secondary: blue,
   },
+  typography: {
+    useNextVariants: true,
+  },
 });
 
 function App() {
@@ -31,8 +34,8 @@ function App() {
           <div className="container">
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/signup" component={Signup} />
+              <Route exact path="/login" component={login} />
+              <Route exact path="/signup" component={signup} />
             </Switch>
           </div>
         </Router>
