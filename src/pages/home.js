@@ -16,7 +16,6 @@ class Home extends Component {
     axios
       .get("/events")
       .then((res) => {
-        console.log(res.data);
         this.setState({
           events: res.data,
         });
@@ -26,16 +25,18 @@ class Home extends Component {
 
   render() {
     let eventsMarkup = this.state.events ? (
-      this.state.events.map((event) => <Event event={event} />)
+      this.state.events.map((event) => (
+        <Event key={event.eventId} event={event} />
+      ))
     ) : (
       <p>Loading... </p>
     );
     return (
-      <Grid container spacing={3} direction="column">
-        <Grid item sm={8} xs={12}>
+      <Grid container spacing={3} direction="row">
+        <Grid item sm={3} xs={12}>
           {<p>User Detail... </p>}
         </Grid>
-        <Grid item sm={12} xs={12}>
+        <Grid item sm={8} xs={12}>
           {eventsMarkup}
         </Grid>
       </Grid>
