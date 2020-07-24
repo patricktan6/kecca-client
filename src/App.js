@@ -17,6 +17,10 @@ import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import { blue } from "@material-ui/core/colors";
 
+// Redux
+import { Provider } from "react-redux";
+import store from "./redux/store";
+
 const theme = createMuiTheme({
   palette: {
     primary: blue,
@@ -43,7 +47,7 @@ if (token) {
 function App() {
   return (
     <MuiThemeProvider theme={theme}>
-      <div className="App">
+      <Provider store={store}>
         <Router>
           <Navbar />
           <div className="container">
@@ -64,7 +68,7 @@ function App() {
             </Switch>
           </div>
         </Router>
-      </div>
+      </Provider>
     </MuiThemeProvider>
   );
 }
