@@ -23,16 +23,7 @@ class Event extends Component {
     dayjs.extend(relativeTime);
     const {
       classes,
-      event: {
-        name,
-        organiser,
-        cca,
-        duration,
-        dateTime,
-        createdAt,
-        listOfAttendees,
-        listOfAbsentees,
-      },
+      event: { name, organiser, cca, duration, dateTime, createdAt },
     } = this.props;
 
     return (
