@@ -8,6 +8,9 @@
 4. axios
 5. dayjs
 6. jwt-decode
+7. redux
+8. react-redux
+9. redux-thunk
 
 ## To-do
 
