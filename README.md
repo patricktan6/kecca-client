@@ -15,4 +15,5 @@
 
 ## To-do
 
-1. FBIdToken in login and signup (when decoded theres props of user_id can use it to find the admin status) need write new backend function
+1. user set as admin
+2. user join cca
