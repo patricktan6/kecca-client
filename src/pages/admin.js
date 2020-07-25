@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Icon from "../images/logo.png";
-import { Link } from "react-router-dom";
 
 // Material-UI
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -41,7 +40,7 @@ const styles = {
   },
 };
 
-class login extends Component {
+class admin extends Component {
   constructor() {
     super();
     this.state = {
@@ -134,4 +133,4 @@ const mapActionsToProps = {
 export default connect(
   mapStateToProps,
   mapActionsToProps
-)(withStyles(styles)(login));
+)(withStyles(styles)(admin));
