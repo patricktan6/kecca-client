@@ -3,11 +3,18 @@ import { Redirect } from "react-router-dom";
 
 // Redux
 import { connect } from "react-redux";
+import { logoutUser } from "../redux/actions/userActions";
 
 // Material-UI
 import withStyles from "@material-ui/core/styles/withStyles";
 import Button from "@material-ui/core/Button";
-import { Paper, Typography } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
+import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip";
+
+// Icon
+import KeyboardReturn from "@material-ui/icons/KeyboardReturn";
 
 const styles = {
   paper: {
@@ -16,6 +23,10 @@ const styles = {
 };
 
 class Profile extends Component {
+  handleLogout = () => {
+    this.props.logoutUser();
+  };
+
   render() {
     const {
       classes,
@@ -38,6 +49,11 @@ class Profile extends Component {
             {cca}
             {tokenHeader}
           </Typography>
+          <Tooltip title="Logout" placement="top">
+            <IconButton onClick={this.handleLogout}>
+              <KeyboardReturn color="primary" />
+            </IconButton>
+          </Tooltip>
         </Paper>
       ) : (
         <Redirect to="/login" />
@@ -54,4 +70,9 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps)(withStyles(styles)(Profile));
+const mapActionsToProps = { logoutUser };
+
+export default connect(
+  mapStateToProps,
+  mapActionsToProps
+)(withStyles(styles)(Profile));
