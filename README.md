@@ -11,6 +11,7 @@
 7. redux
 8. react-redux
 9. redux-thunk
+10. @material-ui/icons
 
 ## To-do
 
