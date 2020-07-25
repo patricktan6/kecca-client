@@ -30,6 +30,9 @@ class Navbar extends Component {
               <Button color="inherit" component={Link} to="/admin">
                 Admin
               </Button>
+              <Button color="inherit" component={Link} to="/join">
+                Join
+              </Button>
               <Button
                 color="inherit"
                 component={Link}

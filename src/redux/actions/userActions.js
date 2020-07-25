@@ -5,6 +5,7 @@ import {
   LOADING_UI,
   SET_UNAUTHENTICATED,
   LOADING_USER,
+  SET_CCA_LIST,
 } from "../types";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
@@ -106,6 +107,41 @@ export const setAsAdmin = (adminData, history) => (dispatch) => {
       dispatch(getUserData());
       dispatch({ type: CLEAR_ERRORS });
       history.push("/");
+    })
+    .catch((err) => {
+      dispatch({
+        type: SET_ERRORS,
+        payload: err.response.data,
+      });
+    });
+};
+
+export const joinCCA = (data, history) => (dispatch) => {
+  dispatch({ type: LOADING_UI });
+  axios
+    .post("/join", data)
+    .then((res) => {
+      dispatch({ type: CLEAR_ERRORS });
+      history.push("/");
+    })
+    .catch((err) => {
+      dispatch({
+        type: SET_ERRORS,
+        payload: err.response.data,
+      });
+    });
+};
+
+export const getAllCCA = () => (dispatch) => {
+  dispatch({ type: LOADING_UI });
+  axios
+    .get("/cca")
+    .then((res) => {
+      const ccaList = res.data;
+      dispatch({
+        type: SET_CCA_LIST,
+        payload: { ccaList },
+      });
     })
     .catch((err) => {
       dispatch({
