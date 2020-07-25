@@ -7,16 +7,20 @@ import {
   LOADING_USER,
 } from "../types";
 import axios from "axios";
+import jwtDecode from "jwt-decode";
 
 export const loginUser = (userData, history) => (dispatch) => {
   dispatch({ type: LOADING_UI });
   axios
     .post("/login", userData)
     .then((res) => {
-      setAuthorizationHeader(res.data.token);
-      dispatch(getUserData());
-      dispatch({ type: CLEAR_ERRORS });
-      history.push("/");
+      setAuthorizationHeader(res.data.token)
+        .then(() => {
+          dispatch(getUserData());
+          dispatch({ type: CLEAR_ERRORS });
+          history.push("/");
+        })
+        .catch((err) => console.log(err));
     })
     .catch((err) => {
       dispatch({
@@ -58,9 +62,14 @@ export const signupUser = (newUserData, history) => (dispatch) => {
 };
 
 const setAuthorizationHeader = (token) => {
-  const FBIdToken = `User ${token}`;
-  localStorage.setItem("FBIdToken", FBIdToken);
-  axios.defaults.headers.common["Authorization"] = FBIdToken;
+  const decodedToken = jwtDecode(token);
+  const userId = decodedToken.user_id;
+  return axios.get(`/user/${userId}`).then((res) => {
+    const startingHeader = res.data.adminStatus.tokenHeader;
+    const FBIdToken = `${startingHeader}${token}`;
+    localStorage.setItem("FBIdToken", FBIdToken);
+    axios.defaults.headers.common["Authorization"] = FBIdToken;
+  });
 };
 
 export const logoutUser = () => (dispatch) => {
