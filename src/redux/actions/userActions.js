@@ -14,13 +14,12 @@ export const loginUser = (userData, history) => (dispatch) => {
   axios
     .post("/login", userData)
     .then((res) => {
-      setAuthorizationHeader(res.data.token)
-        .then(() => {
-          dispatch(getUserData());
-          dispatch({ type: CLEAR_ERRORS });
-          history.push("/");
-        })
-        .catch((err) => console.log(err));
+      return setAuthorizationHeader(res.data.token);
+    })
+    .then(() => {
+      dispatch(getUserData());
+      dispatch({ type: CLEAR_ERRORS });
+      history.push("/");
     })
     .catch((err) => {
       dispatch({
@@ -94,4 +93,24 @@ export const logoutUser = () => (dispatch) => {
   localStorage.removeItem("FBIdToken");
   delete axios.defaults.headers.common["Authorization"];
   dispatch({ type: SET_UNAUTHENTICATED });
+};
+
+export const setAsAdmin = (adminData, history) => (dispatch) => {
+  dispatch({ type: LOADING_UI });
+  axios
+    .post("/user/admin", adminData)
+    .then((res) => {
+      return setAuthorizationHeader(localStorage.FBIdToken.split(" ")[1]);
+    })
+    .then(() => {
+      dispatch(getUserData());
+      dispatch({ type: CLEAR_ERRORS });
+      history.push("/");
+    })
+    .catch((err) => {
+      dispatch({
+        type: SET_ERRORS,
+        payload: err.response.data,
+      });
+    });
 };

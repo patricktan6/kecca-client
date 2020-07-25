@@ -13,12 +13,11 @@ import { logoutUser } from "../redux/actions/userActions";
 
 class Navbar extends Component {
   render() {
-
     const { authenticated } = this.props;
 
     const handleLogout = () => {
       this.props.logoutUser();
-    }
+    };
 
     return (
       <AppBar>
@@ -28,7 +27,15 @@ class Navbar extends Component {
               <Button color="inherit" component={Link} to="/">
                 Home
               </Button>
-              <Button color="inherit" component={Link} to="/login" onClick={handleLogout} >
+              <Button color="inherit" component={Link} to="/admin">
+                Admin
+              </Button>
+              <Button
+                color="inherit"
+                component={Link}
+                to="/login"
+                onClick={handleLogout}
+              >
                 Logout
               </Button>
             </Fragment>
@@ -51,7 +58,7 @@ class Navbar extends Component {
 Navbar.propTypes = {
   authenticated: PropTypes.bool.isRequired,
   logoutUser: PropTypes.func.isRequired,
-}
+};
 
 const mapStateToProps = (state) => ({
   user: state.user,
