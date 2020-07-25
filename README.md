@@ -15,6 +15,6 @@
 
 ## To-do
 
-- user join cca
+- cca page
 - navbar to account for user and admin as well
 - create cca
