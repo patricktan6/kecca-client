@@ -17,3 +17,4 @@
 
 1. user set as admin
 2. user join cca
+3. navbar to account for user and admin as well
