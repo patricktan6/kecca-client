@@ -3,6 +3,7 @@ import axios from "axios";
 
 // Components
 import Event from "../components/Event";
+import Profile from "../components/Profile";
 
 // Material-UI
 import Grid from "@material-ui/core/Grid";
@@ -34,7 +35,7 @@ class Home extends Component {
     return (
       <Grid container spacing={3} direction="row">
         <Grid item sm={3} xs={12}>
-          {<p>User Detail... </p>}
+          <Profile />
         </Grid>
         <Grid item sm={8} xs={12}>
           {eventsMarkup}
