@@ -10,11 +10,6 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import IconButton from "@material-ui/core/IconButton";
-import Tooltip from "@material-ui/core/Tooltip";
-
-// Icon
-import KeyboardReturn from "@material-ui/icons/KeyboardReturn";
 
 const styles = {
   paper: {
@@ -49,11 +44,6 @@ class Profile extends Component {
             {cca}
             {tokenHeader}
           </Typography>
-          <Tooltip title="Logout" placement="top">
-            <IconButton onClick={this.handleLogout}>
-              <KeyboardReturn color="primary" />
-            </IconButton>
-          </Tooltip>
         </Paper>
       ) : (
         <Redirect to="/login" />
