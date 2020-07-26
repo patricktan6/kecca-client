@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Icon from "../images/logo.png";
+import axios from "axios";
 
 // Material-UI
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -8,6 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import MenuItem from "@material-ui/core/MenuItem";
 
 // Redux
 import { connect } from "react-redux";
@@ -46,7 +48,19 @@ class admin extends Component {
     this.state = {
       cca: "",
       errors: {},
+      token: "",
+      ccaList: [],
+      tokenReceived: "",
     };
+  }
+
+  componentDidMount() {
+    axios
+      .get("/cca")
+      .then((res) => {
+        this.setState({ ccaList: res.data });
+      })
+      .catch((err) => console.log(err));
   }
 
   handleSubmit = (event) => {
@@ -54,14 +68,31 @@ class admin extends Component {
     const userData = {
       cca: this.state.cca,
     };
-    this.props.setAsAdmin(userData, this.props.history);
+    if (this.state.token === this.state.tokenReceived) {
+      this.props.setAsAdmin(userData, this.props.history);
+    }
   };
 
-  handleChange = (event) => {
+  handleCCAChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value,
     });
+    const ccaName = {
+      cca: this.state.cca
+    }
+    axios
+      .get(`/cca/${ccaName}`)
+      .then((res) => {
+        this.setState({ token: res.data.token });
+      })
+      .catch((err) => console.log(err));
   };
+
+  handleTokenChange = (event) => {
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.UI.errors) {
@@ -74,7 +105,7 @@ class admin extends Component {
       classes,
       UI: { loading },
     } = this.props;
-    const { errors } = this.state;
+    const { errors, ccaList } = this.state;
     return (
       <Grid container className={classes.form}>
         <Grid item sm />
@@ -88,19 +119,33 @@ class admin extends Component {
               id="cca"
               name="cca"
               type="text"
-              label="CCA Name"
+              label="CCA"
               className={classes.textField}
               helperText={errors.cca}
               error={errors.cca ? true : false}
               value={this.state.cca}
-              onChange={this.handleChange}
+              onChange={this.handleCCAChange}
+              select
+              fullWidth
+            >
+              {ccaList.map((ccaName) => (
+                <MenuItem key={ccaName} value={ccaName}>
+                  {ccaName}
+                </MenuItem>
+              ))}
+            </TextField>
+            <TextField 
+              id="tokenReceived"
+              name="tokenReceived"
+              type="tokenReceived"
+              label="Token"
+              className={classes.textField}
+              helperText={errors.password}
+              error={errors.password ? true : false}
+              value={this.state.tokenReceived}
+              onChange={this.handleTokenChange}
               fullWidth
             />
-            {errors.general && (
-              <Typography variant="body2" className={classes.customError}>
-                {errors.general}
-              </Typography>
-            )}
             <Button
               type="submit"
               variant="contained"
