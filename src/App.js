@@ -11,6 +11,7 @@ import login from "./pages/login";
 import signup from "./pages/signup";
 import admin from "./pages/admin";
 import join from "./pages/join";
+import cca from "./pages/cca";
 
 // Components
 import Navbar from "./components/Navbar";
@@ -64,6 +65,7 @@ function App() {
               <AuthRoute exact path="/signup" component={signup} />
               <PrivateRoute exact path="/admin" component={admin} />
               <PrivateRoute exact path="/join" component={join} />
+              <PrivateRoute exact path="/cca" component={cca} />
             </Switch>
           </div>
         </Router>
