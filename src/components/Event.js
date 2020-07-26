@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
@@ -7,6 +7,9 @@ import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
+
+// Redux
+import { connect } from "react-redux";
 
 const styles = {
   card: {
@@ -23,7 +26,17 @@ class Event extends Component {
     dayjs.extend(relativeTime);
     const {
       classes,
-      event: { name, organiser, cca, duration, dateTime, createdAt },
+      event: {
+        name,
+        organiser,
+        cca,
+        duration,
+        dateTime,
+        createdAt,
+        listOfAttendees,
+        listOfAbsentees,
+      },
+      status,
     } = this.props;
 
     return (
@@ -34,6 +47,12 @@ class Event extends Component {
           <Typography variant="h6">{organiser}</Typography>
           <Typography variant="h6">{cca}</Typography>
           <Typography variant="h6">{duration}</Typography>
+          {status === "Admin " && (
+            <Fragment>
+              <Typography variant="h6">{listOfAttendees}</Typography>
+              <Typography variant="h6">{listOfAbsentees}</Typography>
+            </Fragment>
+          )}
           <Typography variant="body2" color="textSecondary">
             {dayjs(createdAt).fromNow()}
           </Typography>
@@ -43,4 +62,8 @@ class Event extends Component {
   }
 }
 
-export default withStyles(styles)(Event);
+const mapStateToProps = (state) => ({
+  status: state.user.adminStatus.tokenHeader,
+});
+
+export default connect(mapStateToProps)(withStyles(styles)(Event));
