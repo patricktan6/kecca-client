@@ -12,9 +12,12 @@ import Grid from "@material-ui/core/Grid";
 import { connect } from "react-redux";
 
 class Home extends Component {
-  state = {
-    events: null,
-  };
+  constructor() {
+    super();
+    this.state = {
+      events: null,
+    };
+  }
 
   componentDidMount() {
     const { status } = this.props;
