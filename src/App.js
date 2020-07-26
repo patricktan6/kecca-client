@@ -1,8 +1,9 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 import "./App.css";
 import jwtDecode from "jwt-decode";
 import axios from "axios";
+import PrivateRoute from "./util/PrivateRoute";
 
 // Pages
 import Home from "./pages/home";
@@ -58,11 +59,11 @@ function App() {
           <Navbar />
           <div className="container">
             <Switch>
-              <Route exact path="/" component={Home} />
+              <PrivateRoute exact path="/" component={Home} />
               <AuthRoute exact path="/login" component={login} />
               <AuthRoute exact path="/signup" component={signup} />
-              <Route exact path="/admin" component={admin} />
-              <Route exact path="/join" component={join} />
+              <PrivateRoute exact path="/admin" component={admin} />
+              <PrivateRoute exact path="/join" component={join} />
             </Switch>
           </div>
         </Router>
