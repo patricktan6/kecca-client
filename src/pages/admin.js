@@ -50,7 +50,6 @@ class admin extends Component {
       errors: {},
       token: "",
       ccaList: [],
-      tokenReceived: "",
     };
   }
 
@@ -67,32 +66,26 @@ class admin extends Component {
     event.preventDefault();
     const userData = {
       cca: this.state.cca,
+      token: this.state.token,
     };
-    if (this.state.token === this.state.tokenReceived) {
-      this.props.setAsAdmin(userData, this.props.history);
-    }
+    axios.get(`/cca/${userData.cca}`).then((res) => {
+      if (this.state.token === res.data.token) {
+        this.props.setAsAdmin(userData, this.props.history);
+      } else {
+        this.setState({
+          errors: {
+            token: "Token doesn't match",
+          },
+        });
+      }
+    });
   };
 
-  handleCCAChange = (event) => {
+  handleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value,
     });
-    const ccaName = {
-      cca: this.state.cca
-    }
-    axios
-      .get(`/cca/${ccaName}`)
-      .then((res) => {
-        this.setState({ token: res.data.token });
-      })
-      .catch((err) => console.log(err));
   };
-
-  handleTokenChange = (event) => {
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
-  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.UI.errors) {
@@ -124,7 +117,7 @@ class admin extends Component {
               helperText={errors.cca}
               error={errors.cca ? true : false}
               value={this.state.cca}
-              onChange={this.handleCCAChange}
+              onChange={this.handleChange}
               select
               fullWidth
             >
@@ -134,16 +127,16 @@ class admin extends Component {
                 </MenuItem>
               ))}
             </TextField>
-            <TextField 
-              id="tokenReceived"
-              name="tokenReceived"
-              type="tokenReceived"
+            <TextField
+              id="token"
+              name="token"
+              type="text"
               label="Token"
               className={classes.textField}
-              helperText={errors.password}
-              error={errors.password ? true : false}
-              value={this.state.tokenReceived}
-              onChange={this.handleTokenChange}
+              helperText={errors.token}
+              error={errors.token ? true : false}
+              value={this.state.token}
+              onChange={this.handleChange}
               fullWidth
             />
             <Button
