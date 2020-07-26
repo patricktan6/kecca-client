@@ -3,6 +3,7 @@ import {
   SET_AUTHENTICATED,
   SET_UNAUTHENTICATED,
   LOADING_USER,
+  SET_CCA_LIST,
 } from "../types";
 
 const initialState = {
@@ -12,6 +13,7 @@ const initialState = {
   ccaParticipated: [],
   name: "",
   studentCard: "",
+  ccaList: [],
 };
 
 export default function (state = initialState, action) {
@@ -33,6 +35,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loading: true,
+      };
+    case SET_CCA_LIST:
+      return {
+        ...state,
+        loading: false,
+        ...action.payload,
       };
     default:
       return state;

@@ -8,6 +8,8 @@ import axios from "axios";
 import Home from "./pages/home";
 import login from "./pages/login";
 import signup from "./pages/signup";
+import admin from "./pages/admin";
+import join from "./pages/join";
 
 // Components
 import Navbar from "./components/Navbar";
@@ -59,6 +61,8 @@ function App() {
               <Route exact path="/" component={Home} />
               <AuthRoute exact path="/login" component={login} />
               <AuthRoute exact path="/signup" component={signup} />
+              <Route exact path="/admin" component={admin} />
+              <Route exact path="/join" component={join} />
             </Switch>
           </div>
         </Router>

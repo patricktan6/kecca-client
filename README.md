@@ -15,4 +15,6 @@
 
 ## To-do
 
-1. FBIdToken in login and signup (when decoded theres props of user_id can use it to find the admin status) need write new backend function
+- cca page
+- navbar to account for user and admin as well
+- create cca
