@@ -8,20 +8,36 @@ import Profile from "../components/Profile";
 // Material-UI
 import Grid from "@material-ui/core/Grid";
 
+// Redux
+import { connect } from "react-redux";
+
 class Home extends Component {
   state = {
     events: null,
   };
 
   componentDidMount() {
-    axios
-      .get("/event/user")
-      .then((res) => {
-        this.setState({
-          events: res.data,
-        });
-      })
-      .catch((err) => console.log(err));
+    const { status } = this.props;
+
+    if (status === "User ") {
+      axios
+        .get("/event/user")
+        .then((res) => {
+          this.setState({
+            events: res.data,
+          });
+        })
+        .catch((err) => console.log(err));
+    } else {
+      axios
+        .get("/event/admin")
+        .then((res) => {
+          this.setState({
+            events: res.data,
+          });
+        })
+        .catch((err) => console.log(err));
+    }
   }
 
   render() {
@@ -45,4 +61,8 @@ class Home extends Component {
   }
 }
 
-export default Home;
+const mapStateToProps = (state) => ({
+  status: state.user.adminStatus.tokenHeader,
+});
+
+export default connect(mapStateToProps)(Home);
