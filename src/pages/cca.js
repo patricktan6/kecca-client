@@ -15,7 +15,7 @@ class cca extends Component {
 
   componentDidMount() {
     axios
-      .get("/events")
+      .get("/event/cca")
       .then((res) => {
         this.setState({
           events: res.data,
