@@ -66,6 +66,7 @@ Navbar.propTypes = {
 const mapStateToProps = (state) => ({
   user: state.user,
   authenticated: state.user.authenticated,
+  status: state.user.adminStatus.tokenHeader,
 });
 
 const mapActionsToProps = { logoutUser };
