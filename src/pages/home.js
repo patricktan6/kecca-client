@@ -15,7 +15,7 @@ class Home extends Component {
 
   componentDidMount() {
     axios
-      .get("/events")
+      .get("/event/user")
       .then((res) => {
         this.setState({
           events: res.data,
@@ -41,7 +41,7 @@ class Home extends Component {
           {eventsMarkup}
         </Grid>
       </Grid>
-    )
+    );
   }
 }
 
