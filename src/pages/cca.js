@@ -45,7 +45,7 @@ class cca extends Component {
     const handleClick = () => {
       this.setState({ collapse: !collapse });
     };
-
+    console.log(events);
     return (
       <Fragment>
         <Grid container spacing={3} direction="row">
@@ -81,9 +81,7 @@ class cca extends Component {
             {eventLoading ? (
               <Typography variant="body2">Loading...</Typography>
             ) : events.length !== 0 ? (
-              events.map((event) => (
-                <Event key={event.eventId} eventId={event.eventId} />
-              ))
+              events.map((event) => <Event key={event.eventId} event={event} />)
             ) : (
               <Typography variant="body2">No Events</Typography>
             )}

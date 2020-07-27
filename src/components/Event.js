@@ -23,25 +23,19 @@ const styles = {
 };
 
 class Event extends Component {
-  componentDidMount() {
-    this.props.getOneEvent(this.props.eventId);
-  }
-
   render() {
     dayjs.extend(relativeTime);
     const {
       classes,
       event: {
-        event: {
-          name,
-          organiser,
-          cca,
-          duration,
-          dateTime,
-          createdAt,
-          listOfAttendees,
-          listOfAbsentees,
-        },
+        name,
+        organiser,
+        cca,
+        duration,
+        dateTime,
+        createdAt,
+        listOfAttendees,
+        listOfAbsentees,
       },
       status,
     } = this.props;
@@ -71,7 +65,6 @@ class Event extends Component {
 
 const mapStateToProps = (state) => ({
   status: state.user.adminStatus.tokenHeader,
-  event: state.event,
 });
 
 const mapActionsToProps = {
