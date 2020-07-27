@@ -13,7 +13,11 @@ import { logoutUser } from "../redux/actions/userActions";
 
 class Navbar extends Component {
   render() {
-    const { authenticated, status } = this.props;
+    const {
+      authenticated,
+      status,
+      cca: { name },
+    } = this.props;
 
     const handleLogout = () => {
       this.props.logoutUser();
@@ -34,7 +38,7 @@ class Navbar extends Component {
               ) : (
                 <Fragment>
                   <Button color="inherit" component={Link} to="/cca">
-                    CCA
+                    {name === "" ? "CCA" : name}
                   </Button>
                   <Button color="inherit" component={Link} to="/new_event">
                     New Event
@@ -78,6 +82,7 @@ const mapStateToProps = (state) => ({
   user: state.user,
   authenticated: state.user.authenticated,
   status: state.user.adminStatus.tokenHeader,
+  cca: state.cca,
 });
 
 const mapActionsToProps = { logoutUser };
