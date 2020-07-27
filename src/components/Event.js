@@ -4,9 +4,19 @@ import relativeTime from "dayjs/plugin/relativeTime";
 
 // Material-UI
 import { withStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
+import IconButton from '@material-ui/core/IconButton';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import transitions from "@material-ui/core/styles/transitions";
+import {
+  Card,
+  CardContent,
+  CardActions,
+  Typography,
+  Collapse,
+  List,
+  ListItem,
+  Paper,
+} from "@material-ui/core";
 
 // Redux
 import { connect } from "react-redux";
@@ -19,9 +29,27 @@ const styles = {
   content: {
     padding: 25,
   },
+  expand: {
+    transform: 'rotate(0deg)',
+    marginLeft: 'auto',
+    transition: transitions.create('transform', {
+      duration: transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)',
+  },
 };
 
 class Event extends Component {
+  constructor() {
+    super();
+    this.state = {
+      collapse1: false,
+      collapse2: false,
+    };
+  }
+
   render() {
     dayjs.extend(relativeTime);
     const {
@@ -37,7 +65,18 @@ class Event extends Component {
         listOfAbsentees,
       },
       status,
+      loading,
+      UI: { loading: uiLoading },
     } = this.props;
+    const { collapse1, collapse2 } = this.state;
+
+    const handleClick1 = () => {
+      this.setState({ collapse1: !collapse1 });
+    };
+
+    const handleClick2 = () => {
+      this.setState({ collapse2: !collapse2 });
+    };
 
     return (
       <Card className={classes.card}>
@@ -49,8 +88,61 @@ class Event extends Component {
           <Typography variant="h6">Duration: {duration} hour(s)</Typography>
           {status === "Admin " && (
             <Fragment>
-              <Typography variant="h6">{listOfAttendees}</Typography>
+              <CardActions>
+                <Typography variant="button">Attendees</Typography>
+                <IconButton
+                  className={!collapse1 ? classes.expand : classes.expandOpen}
+                  onClick={handleClick1}
+                  aria-label="show more"
+                >
+                  <ExpandMoreIcon />
+                </IconButton>
+              </CardActions>
+              <Collapse in={collapse1} timeout="auto" unmountOnExit>
+                <Paper>
+                  {loading ? (
+                    <Typography variant="body2">Loading...</Typography>
+                  ) : listOfAttendees.length !== 0 ? (
+                    <List>
+                      {listOfAttendees.map((studentCard) => (
+                        <ListItem key={studentCard}>
+                          {studentCard}
+                        </ListItem>
+                      ))}
+                    </List>
+                  ) : (
+                    <Typography variant="body2">No Attendees</Typography>
+                  )}
+                </Paper>
+              </Collapse>
               <Typography variant="h6">{listOfAbsentees}</Typography>
+              <CardActions>
+                <Typography variant="button">Attendees</Typography>
+                <IconButton
+                  className={!collapse2 ? classes.expand : classes.expandOpen}
+                  onClick={handleClick2}
+                  aria-label="show more"
+                >
+                  <ExpandMoreIcon />
+                </IconButton>
+              </CardActions>
+              <Collapse in={collapse2} timeout="auto" unmountOnExit>
+                <Paper>
+                  {loading ? (
+                    <Typography variant="body2">Loading...</Typography>
+                  ) : listOfAbsentees.length !== 0 ? (
+                    <List>
+                      {listOfAbsentees.map((studentCard) => (
+                        <ListItem key={studentCard}>
+                          {studentCard}
+                        </ListItem>
+                      ))}
+                    </List>
+                  ) : (
+                    <Typography variant="body2">No Absentees</Typography>
+                  )}
+                </Paper>
+              </Collapse>
             </Fragment>
           )}
           <Typography variant="body2" color="textSecondary">
