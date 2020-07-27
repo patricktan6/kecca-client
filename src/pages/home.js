@@ -36,7 +36,13 @@ class home extends Component {
           {loading ? (
             <Typography variant="body2">Loading...</Typography>
           ) : events.length !== 0 ? (
-            events.map((event) => <Event key={event.eventId} event={event} />)
+            events.map((event) => (
+              <Event
+                key={event.eventId}
+                event={event}
+                location={this.props.location}
+              />
+            ))
           ) : (
             <Typography variant="body2">No Events</Typography>
           )}
