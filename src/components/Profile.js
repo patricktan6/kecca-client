@@ -7,16 +7,46 @@ import { logoutUser } from "../redux/actions/userActions";
 
 // Material-UI
 import withStyles from "@material-ui/core/styles/withStyles";
-import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
+import {
+  Collapse,
+  List,
+  ListItem,
+  Paper,
+  Typography,
+  Card,
+  CardActions,
+} from "@material-ui/core";
+import IconButton from '@material-ui/core/IconButton';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import transitions from "@material-ui/core/styles/transitions";
 
 const styles = {
   paper: {
     padding: 20,
   },
+  expand: {
+    transform: 'rotate(0deg)',
+    marginLeft: 'auto',
+    transition: transitions.create('transform', {
+      duration: transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)',
+  },
+  text: {
+    textAlign: "center",
+  },
 };
 
 class Profile extends Component {
+  constructor() {
+    super();
+    this.state = {
+      collapse: false,
+    };
+  }
+
   handleLogout = () => {
     this.props.logoutUser();
   };
@@ -33,16 +63,46 @@ class Profile extends Component {
         adminStatus: { cca, tokenHeader },
       },
     } = this.props;
+    const handleClick = () => {
+      this.setState({ collapse: !collapse });
+    };
+    const { collapse } = this.state;
     let profileMarkup = !loading ? (
       authenticated ? (
         <Paper className={classes.paper}>
           <Typography variant="h5">{name}</Typography>
           <Typography>{studentCard}</Typography>
-          <Typography>{ccaParticipated}</Typography>
           <Typography>
             {cca}
             {tokenHeader}
           </Typography>
+          <Card>
+          <CardActions>
+            <Typography variant="button" className={classes.text} >CCAs Participated</Typography>
+            <IconButton
+              className={!collapse ? classes.expand : classes.expandOpen}
+              onClick={handleClick}
+              aria-label="show more"
+            >
+              <ExpandMoreIcon />
+            </IconButton>
+          </CardActions>
+          <Collapse in={collapse} timeout="auto" unmountOnExit>
+              <Paper>
+                {loading ? (
+                  <Typography variant="body2">Loading...</Typography>
+                ) : ccaParticipated ? (
+                  <List>
+                    {ccaParticipated.map((cca) => (
+                      <ListItem key={cca}>{cca}</ListItem>
+                    ))}
+                  </List>
+                ) : (
+                  <Typography variant="body2">No Absentees</Typography>
+                )}
+              </Paper>
+            </Collapse>
+          </Card>
         </Paper>
       ) : (
         <Redirect to="/login" />
