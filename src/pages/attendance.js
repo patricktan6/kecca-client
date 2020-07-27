@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import { Redirect } from 'react-router-dom';
 import axios from "axios";
 
 // Material-UI
@@ -47,6 +48,7 @@ class Attendance extends Component {
     this.state = {
       attendees: [],
       members: [],
+      submitted: false,
     };
   }
 
@@ -61,12 +63,16 @@ class Attendance extends Component {
       .catch((err) => console.log(err));
   }
 
-  // nothing happens
   handleSubmit = (event) => {
     event.preventDefault();
     const listOfAttendees = this.state.attendees;
     axios
       .post(`/event/${this.props.eventId}/attendance`, { listOfAttendees })
+      .then(
+        this.setState({
+        submitted : true,
+        })   
+      )
       .catch((err) => console.log(err));
   };
 
@@ -86,41 +92,45 @@ class Attendance extends Component {
 
     return (
       <Fragment>
-        <form noValidate onSubmit={this.handleSubmit}>
-          <List dense>
-            {this.state.members.map((stunum) => {
-              const labelId = `${stunum}`;
-              return (
-                <ListItem key={stunum} button>
-                  <ListItemText id={labelId} primary={`${stunum}`} />
-                  <ListItemSecondaryAction>
-                    <Checkbox
-                      edge="end"
-                      label={`${stunum}`}
-                      value={`${stunum}`}
-                      onChange={(e) => this.handleCheck(e, stunum)}
-                      checked={this.state.attendees.includes(stunum)}
-                      inputProps={{ "aria-labelledby": labelId }}
-                    />
-                  </ListItemSecondaryAction>
-                </ListItem>
-              );
-            })}
-          </List>
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            className={classes.button}
-            disabled={loading}
-            onClick={this.handleSubmit}
-          >
-            Mark Attendance
-            {loading && (
-              <CircularProgress size={30} className={classes.progress} />
-            )}
-          </Button>
-        </form>
+        {!this.state.submitted ? (
+          <form noValidate onSubmit={this.handleSubmit}>
+            <List dense>
+              {this.state.members.map((stunum) => {
+                const labelId = `${stunum}`;
+                return (
+                  <ListItem key={stunum} button>
+                    <ListItemText id={labelId} primary={`${stunum}`} />
+                    <ListItemSecondaryAction>
+                      <Checkbox
+                        edge="end"
+                        label={`${stunum}`}
+                        value={`${stunum}`}
+                        onChange={(e) => this.handleCheck(e, stunum)}
+                        checked={this.state.attendees.includes(stunum)}
+                        inputProps={{ "aria-labelledby": labelId }}
+                      />
+                    </ListItemSecondaryAction>
+                  </ListItem>
+                );
+              })}
+            </List>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              className={classes.button}
+              disabled={loading}
+              onClick={this.handleSubmit}
+            >
+              Mark Attendance
+              {loading && (
+                <CircularProgress size={30} className={classes.progress} />
+              )}
+            </Button>
+          </form>
+        ) : (
+          <Redirect to="/cca" />
+        )}
       </Fragment>
     );
   }
