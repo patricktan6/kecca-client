@@ -10,7 +10,7 @@ import Grid from "@material-ui/core/Grid";
 
 // Redux
 import { connect } from "react-redux";
-import { getEvents } from "../redux/actions/eventActions";
+import { getParticipatedEvents } from "../redux/actions/eventActions";
 import { Typography } from "@material-ui/core";
 
 class home extends Component {
@@ -20,7 +20,7 @@ class home extends Component {
   }
 
   componentDidMount() {
-    this.props.getEvents();
+    this.props.getParticipatedEvents();
   }
 
   render() {
@@ -52,7 +52,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapActionsToProps = {
-  getEvents,
+  getParticipatedEvents,
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(home);
