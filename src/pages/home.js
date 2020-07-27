@@ -35,7 +35,7 @@ class home extends Component {
         <Grid item sm={8} xs={12}>
           {loading ? (
             <Typography variant="body2">Loading...</Typography>
-          ) : events.length !== 0 ? (
+          ) : events.length ? (
             events.map((event) => <Event key={event.eventId} event={event} />)
           ) : (
             <Typography variant="body2">No Events</Typography>
