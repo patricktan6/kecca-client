@@ -93,7 +93,7 @@ class signup extends Component {
         <Grid item sm />
         <Grid item sm>
           <img src={Icon} alt="KEVII Logo" className={classes.image} />
-          <Typography variant="h2" className={classes.pageTitle}>
+          <Typography variant="h3" className={classes.pageTitle}>
             Sign Up
           </Typography>
           <form noValidate onSubmit={this.handleSubmit}>

@@ -6,21 +6,38 @@ import Profile from "../components/Profile";
 import Request from "../components/Request";
 
 // Material-UI
+import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
 import {
   Card,
-  CardActionArea,
+  CardActions,
   Typography,
   Collapse,
   Paper,
   List,
   ListItem,
 } from "@material-ui/core";
+import IconButton from '@material-ui/core/IconButton';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import transitions from "@material-ui/core/styles/transitions";
 
 // Redux
 import { connect } from "react-redux";
 import { getPendingRequest, getCCADetails } from "../redux/actions/ccaActions";
 import { getOrganisedEvents } from "../redux/actions/eventActions";
+
+const styles = {
+  expand: {
+    transform: 'rotate(0deg)',
+    marginLeft: 'auto',
+    transition: transitions.create('transform', {
+      duration: transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)',
+  },
+};
 
 class cca extends Component {
   constructor() {
@@ -38,6 +55,7 @@ class cca extends Component {
 
   render() {
     const {
+      classes,
       cca: { listOfMembers, loading: ccaLoading },
       event: { events, loading: eventLoading },
     } = this.props;
@@ -54,9 +72,16 @@ class cca extends Component {
             <Request />
             <Fragment>
               <Card button onClick={handleClick}>
-                <CardActionArea>
-                  <Typography variant="h6">Members</Typography>
-                </CardActionArea>
+                <CardActions>
+                  <Typography variant="button">Members</Typography>
+                  <IconButton
+                    className={!collapse ? classes.expand : classes.expandOpen}
+                    onClick={handleClick}
+                    aria-label="show more"
+                  >
+                    <ExpandMoreIcon />
+                  </IconButton>
+                </CardActions>
               </Card>
               <Collapse in={collapse} timeout="auto" unmountOnExit>
                 <Paper>
@@ -103,4 +128,4 @@ const mapActionsToProps = {
   getOrganisedEvents,
 };
 
-export default connect(mapStateToProps, mapActionsToProps)(cca);
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(cca));

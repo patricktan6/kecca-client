@@ -24,7 +24,7 @@ class Navbar extends Component {
     };
 
     return (
-      <AppBar>
+      <AppBar >
         <Toolbar className="nav-container">
           {authenticated ? (
             <Fragment>
