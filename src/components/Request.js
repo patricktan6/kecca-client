@@ -89,7 +89,7 @@ class Request extends Component {
           <Paper>
             {loading ? (
               <Typography variant="body2">Loading...</Typography>
-            ) : pendingRequest ? (
+            ) : pendingRequest.length !== 0 ? (
               <List>
                 {pendingRequest.map((studentCard) => (
                   <ListItem key={studentCard}>
@@ -110,6 +110,7 @@ class Request extends Component {
                         <Clear />
                       </Button>
                     </Tooltip>
+                    <Typography varian="body2">{studentCard}</Typography>
                   </ListItem>
                 ))}
               </List>

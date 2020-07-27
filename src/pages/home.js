@@ -11,7 +11,7 @@ import Grid from "@material-ui/core/Grid";
 // Redux
 import { connect } from "react-redux";
 
-class Home extends Component {
+class home extends Component {
   constructor() {
     super();
     this.state = {
@@ -68,4 +68,4 @@ const mapStateToProps = (state) => ({
   status: state.user.adminStatus.tokenHeader,
 });
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps)(home);
