@@ -19,8 +19,8 @@ export const loginUser = (userData, history) => (dispatch) => {
     })
     .then(() => {
       dispatch(getUserData());
-      dispatch({ type: CLEAR_ERRORS });
       history.push("/");
+      dispatch({ type: CLEAR_ERRORS });
     })
     .catch((err) => {
       dispatch({
@@ -64,8 +64,8 @@ export const signupUser = (newUserData, history) => (dispatch) => {
       setAuthorizationHeader(res.data.token)
         .then(() => {
           dispatch(getUserData());
-          dispatch({ type: CLEAR_ERRORS });
           history.push("/");
+          dispatch({ type: CLEAR_ERRORS });
         })
         .catch((err) => console.log(err));
     })
