@@ -40,6 +40,9 @@ const styles = {
   progress: {
     position: "absolute",
   },
+  ccaList: {
+    textAlign: "center",
+  },
 };
 
 class admin extends Component {
@@ -47,8 +50,8 @@ class admin extends Component {
     super();
     this.state = {
       cca: "",
-      errors: {},
       token: "",
+      errors: {},
       ccaList: [],
     };
   }
@@ -68,17 +71,7 @@ class admin extends Component {
       cca: this.state.cca,
       token: this.state.token,
     };
-    axios.get(`/cca/${userData.cca}`).then((res) => {
-      if (this.state.token === res.data.token) {
-        this.props.setAsAdmin(userData, this.props.history);
-      } else {
-        this.setState({
-          errors: {
-            token: "Token doesn't match",
-          },
-        });
-      }
-    });
+    this.props.setAsAdmin(userData, this.props.history);
   };
 
   handleChange = (event) => {
@@ -98,7 +91,7 @@ class admin extends Component {
       classes,
       UI: { loading },
     } = this.props;
-    const { errors, ccaList } = this.state;
+    const { ccaList, errors } = this.state;
     return (
       <Grid container className={classes.form}>
         <Grid item sm />
@@ -121,11 +114,17 @@ class admin extends Component {
               select
               fullWidth
             >
-              {ccaList.map((ccaName) => (
-                <MenuItem key={ccaName} value={ccaName}>
-                  {ccaName}
-                </MenuItem>
-              ))}
+              {ccaList.length !== 0 ? (
+                ccaList.map((ccaName) => (
+                  <MenuItem key={ccaName} value={ccaName}>
+                    {ccaName}
+                  </MenuItem>
+                ))
+              ) : (
+                <Typography variant="body2" className={classes.ccaList}>
+                  Loading...
+                </Typography>
+              )}
             </TextField>
             <TextField
               id="token"
