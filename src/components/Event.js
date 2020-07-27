@@ -43,6 +43,12 @@ const styles = {
 };
 
 class Event extends Component {
+
+  state = {
+    collapse1: false,
+    collapse2: false,
+  }
+
   componentDidMount() {
     this.props.getOneEvent(this.props.eventId);
   }
@@ -100,7 +106,7 @@ class Event extends Component {
                 <Paper>
                   {loading ? (
                     <Typography variant="body2">Loading...</Typography>
-                  ) : listOfAttendees.length !== 0 ? (
+                  ) : listOfAttendees ? (
                     <List>
                       {listOfAttendees.map((studentCard) => (
                         <ListItem key={studentCard}>
