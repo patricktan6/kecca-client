@@ -133,7 +133,7 @@ class Event extends Component {
                 <Paper>
                   {loading ? (
                     <Typography variant="body2">Loading...</Typography>
-                  ) : listOfAbsentees.length !== 0 ? (
+                  ) : listOfAbsentees ? (
                     <List>
                       {listOfAbsentees.map((studentCard) => (
                         <ListItem key={studentCard}>
