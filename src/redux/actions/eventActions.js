@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LOADING_UI, SET_EVENTS, LOADING_EVENT, SET_EVENT } from "../types";
+import { SET_EVENTS, LOADING_EVENT, SET_EVENT } from "../types";
 
 export const getParticipatedEvents = () => (dispatch) => {
   dispatch({ type: LOADING_EVENT });

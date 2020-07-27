@@ -28,7 +28,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import transitions from "@material-ui/core/styles/transitions";
 
 const styles = {
-  root: {
+  text: {
     textAlign: "center",
   },
   expand: {
@@ -73,9 +73,11 @@ class Request extends Component {
     };
     return (
       <Fragment>
-        <Card className={classes.root}>
+        <Card>
           <CardActions>
-            <Typography variant="button">Pending Requests</Typography>
+            <Typography variant="button" className={classes.text} >
+              Pending Requests
+            </Typography>
             <IconButton
               className={!collapse ? classes.expand : classes.expandOpen}
               onClick={handleClick}
@@ -84,41 +86,41 @@ class Request extends Component {
               <ExpandMoreIcon />
             </IconButton>
           </CardActions>
+          <Collapse in={collapse} timeout="auto" unmountOnExit>
+            <Paper>
+              {loading ? (
+                <Typography variant="body2">Loading...</Typography>
+              ) : pendingRequest.length !== 0 ? (
+                <List>
+                  {pendingRequest.map((studentCard) => (
+                    <ListItem key={studentCard}>
+                      {studentCard}
+                      <Tooltip title="Accept" placement="top">
+                        <Button
+                          onClick={() => this.handleAccept(studentCard)}
+                          disabled={uiLoading}
+                        >
+                          <Check />
+                        </Button>
+                      </Tooltip>
+                      <Tooltip title="Decline" placement="top">
+                        <Button
+                          onClick={() => this.handleDecline(studentCard)}
+                          disabled={uiLoading}
+                        >
+                          <Clear />
+                        </Button>
+                      </Tooltip>
+                      <Typography varian="body2">{studentCard}</Typography>
+                    </ListItem>
+                  ))}
+                </List>
+              ) : (
+                <Typography variant="body2">No Request</Typography>
+              )}
+            </Paper>
+          </Collapse>
         </Card>
-        <Collapse in={collapse} timeout="auto" unmountOnExit>
-          <Paper>
-            {loading ? (
-              <Typography variant="body2">Loading...</Typography>
-            ) : pendingRequest.length !== 0 ? (
-              <List>
-                {pendingRequest.map((studentCard) => (
-                  <ListItem key={studentCard}>
-                    {studentCard}
-                    <Tooltip title="Accept" placement="top">
-                      <Button
-                        onClick={() => this.handleAccept(studentCard)}
-                        disabled={uiLoading}
-                      >
-                        <Check />
-                      </Button>
-                    </Tooltip>
-                    <Tooltip title="Decline" placement="top">
-                      <Button
-                        onClick={() => this.handleDecline(studentCard)}
-                        disabled={uiLoading}
-                      >
-                        <Clear />
-                      </Button>
-                    </Tooltip>
-                    <Typography varian="body2">{studentCard}</Typography>
-                  </ListItem>
-                ))}
-              </List>
-            ) : (
-              <Typography variant="body2">No Request</Typography>
-            )}
-          </Paper>
-        </Collapse>
       </Fragment>
     );
   }
