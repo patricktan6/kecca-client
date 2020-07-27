@@ -1,7 +1,6 @@
 ## Problem
 
 - User still can send join request after sending request or already joined
-- join page didnt show loading when loading listOfCCA
 - event page didn't show loading
 
 # KECCA
