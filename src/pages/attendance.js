@@ -129,7 +129,7 @@ class Attendance extends Component {
             </Button>
           </form>
         ) : (
-          <Redirect to="/" />
+          <Redirect to="/cca" />
         )}
       </Fragment>
     );
