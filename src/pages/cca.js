@@ -77,7 +77,7 @@ class cca extends Component {
             <Fragment>
               <Card button onClick={handleClick}>
                 <CardActions>
-                  <Typography variant="button">
+                  <Typography variant="button" className={classes.member}>
                     Members
                   </Typography>
                   <IconButton

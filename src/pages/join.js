@@ -112,11 +112,17 @@ class join extends Component {
               select
               fullWidth
             >
-              {ccaList.map((ccaName) => (
-                <MenuItem key={ccaName} value={ccaName}>
-                  {ccaName}
-                </MenuItem>
-              ))}
+              {ccaList.length !== 0 ? (
+                ccaList.map((ccaName) => (
+                  <MenuItem key={ccaName} value={ccaName}>
+                    {ccaName}
+                  </MenuItem>
+                ))
+              ) : (
+                <Typography variant="body2" className={classes.form}>
+                  Loading...
+                </Typography>
+              )}
             </TextField>
             <TextField
               id="studentCard"
@@ -131,7 +137,13 @@ class join extends Component {
               select
               fullWidth
             >
-              <MenuItem value={studentCard}>{studentCard}</MenuItem>
+              {studentCard === "" ? (
+                <Typography variant="body2" className={classes.form}>
+                  Loading...
+                </Typography>
+              ) : (
+                <MenuItem value={studentCard}>{studentCard}</MenuItem>
+              )}
             </TextField>
             {errors.general && (
               <Typography variant="body2" className={classes.customError}>
@@ -143,7 +155,11 @@ class join extends Component {
               variant="contained"
               color="primary"
               className={classes.button}
-              disabled={loading}
+              disabled={
+                loading ||
+                this.state.cca === "" ||
+                this.state.studentCard === ""
+              }
             >
               Send Join Request
               {loading && (
