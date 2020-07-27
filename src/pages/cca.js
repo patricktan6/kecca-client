@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-import axios from "axios";
 
 // Components
 import Event from "../components/Event";
@@ -38,14 +37,6 @@ class cca extends Component {
   }
 
   render() {
-    let eventsMarkup = this.state.events ? (
-      this.state.events.map((event) => (
-        <Event key={event.eventId} event={event} />
-      ))
-    ) : (
-      <p>Loading... </p>
-    );
-
     const {
       cca: { listOfMembers, loading: ccaLoading },
       event: { events, loading: eventLoading },
