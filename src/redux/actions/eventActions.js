@@ -45,6 +45,28 @@ export const getParticipatedEvents = () => (dispatch) => {
   }
 };
 
+export const getOrganisedEvents = () => (dispatch) => {
+  dispatch({ type: LOADING_EVENT });
+  axios
+    .get("/event/cca")
+    .then((res) => {
+      dispatch({
+        type: SET_EVENTS,
+        payload: {
+          events: res.data,
+        },
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: SET_EVENTS,
+        payload: {
+          events: [],
+        },
+      });
+    });
+};
+
 // export const createEvent = (eventData) => (dispatch) => {
 //   dispatch({type: LOADING_UI});
 //   axios.post("/event", eventData).then((res) => {
