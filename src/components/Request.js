@@ -15,8 +15,10 @@ import {
   Card,
   CardActionArea,
   Button,
+  Tooltip,
 } from "@material-ui/core";
 import Check from "@material-ui/icons/Check";
+import Clear from "@material-ui/icons/Clear";
 
 class Request extends Component {
   constructor() {
@@ -26,9 +28,18 @@ class Request extends Component {
     };
   }
 
-  handleClick = (studentCard) => {
+  handleAccept = (studentCard) => {
     axios
       .post("/cca/accept", { studentCard })
+      .then((res) => {
+        this.props.getPendingRequest();
+      })
+      .catch((err) => console.log(err));
+  };
+
+  handleDecline = (studentCard) => {
+    axios
+      .post("/cca/decline", { studentCard })
       .then((res) => {
         this.props.getPendingRequest();
       })
@@ -53,9 +64,17 @@ class Request extends Component {
             <List>
               {pendingRequest.map((studentCard) => (
                 <ListItem key={studentCard}>
-                  <Button onClick={() => this.handleClick(studentCard)}>
-                    <Check />
-                  </Button>
+                  <Tooltip title="Accept" placement="top">
+                    <Button onClick={() => this.handleAccept(studentCard)}>
+                      <Check />
+                    </Button>
+                  </Tooltip>
+                  <Tooltip title="Decline" placement="top">
+                    <Button onClick={() => this.handleDecline(studentCard)}>
+                      <Clear />
+                    </Button>
+                  </Tooltip>
+
                   {studentCard}
                 </ListItem>
               ))}
