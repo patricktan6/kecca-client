@@ -15,6 +15,7 @@
 
 ## To-do
 
-- cca page
-- navbar to account for user and admin as well
-- create cca
+## Problem
+
+- User still can send join request after sending request or already joined
+- join page didnt show loading when loading listOfCCA
