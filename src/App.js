@@ -67,7 +67,7 @@ function App() {
               <PrivateRoute exact path="/admin" component={admin} />
               <PrivateRoute exact path="/join" component={join} />
               <PrivateRoute exact path="/cca" component={cca} />
-              <Route exact path="/new_event" component={event} />
+              <PrivateRoute exact path="/new_event" component={event} />
             </Switch>
           </div>
         </Router>
