@@ -24,7 +24,7 @@ export const getPendingRequest = () => (dispatch) => {
       dispatch({
         type: SET_PENDING_REQUEST,
         payload: {
-          pendingRequest: null,
+          pendingRequest: [],
         },
       });
     });

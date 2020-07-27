@@ -61,7 +61,7 @@ class Request extends Component {
           <Paper>
             {loading ? (
               <Typography variant="body2">Loading...</Typography>
-            ) : pendingRequest ? (
+            ) : pendingRequest.length !== 0 ? (
               <List>
                 {pendingRequest.map((studentCard) => (
                   <ListItem key={studentCard}>

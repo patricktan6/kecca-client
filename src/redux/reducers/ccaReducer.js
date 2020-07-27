@@ -1,10 +1,10 @@
 import { SET_PENDING_REQUEST, LOADING_CCA, SET_DETAIL } from "../types";
 
 const initialState = {
-  pendingRequest: null,
+  pendingRequest: [],
   loading: false,
   name: "",
-  listOfMembers: null,
+  listOfMembers: [],
 };
 
 export default function (state = initialState, action) {
