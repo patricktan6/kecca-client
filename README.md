@@ -19,6 +19,4 @@
 
 - User still can send join request after sending request or already joined
 - join page didnt show loading when loading listOfCCA
-- home page when no participated event not showing no event participated
-- set admin page not working and i don't know why
 - event page didn't show loading
