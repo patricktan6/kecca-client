@@ -7,6 +7,7 @@ export const SET_CCA_LIST = "SET_CCA_LIST";
 
 // CCA reducer types
 export const SET_PENDING_REQUEST = "SET_PENDING_REQUEST";
+export const LOADING_CCA = "LOADING_CCA";
 
 // UI reducer types
 export const SET_ERRORS = "SET_ERRORS";

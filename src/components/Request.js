@@ -3,7 +3,11 @@ import axios from "axios";
 
 // Redux
 import { connect } from "react-redux";
-import { getPendingRequest } from "../redux/actions/ccaActions";
+import {
+  getPendingRequest,
+  acceptRequest,
+  declineRequest,
+} from "../redux/actions/ccaActions";
 
 // Material-UI
 import {
@@ -29,26 +33,20 @@ class Request extends Component {
   }
 
   handleAccept = (studentCard) => {
-    axios
-      .post("/cca/accept", { studentCard })
-      .then((res) => {
-        this.props.getPendingRequest();
-      })
-      .catch((err) => console.log(err));
+    this.props.acceptRequest(studentCard);
   };
 
   handleDecline = (studentCard) => {
-    axios
-      .post("/cca/decline", { studentCard })
-      .then((res) => {
-        this.props.getPendingRequest();
-      })
-      .catch((err) => console.log(err));
+    this.props.declineRequest(studentCard);
   };
 
   render() {
     const { collapse } = this.state;
-    const { pendingRequest } = this.props;
+    const {
+      pendingRequest,
+      loading,
+      UI: { loading: uiLoading },
+    } = this.props;
     const handleClick = () => {
       this.setState({ collapse: !collapse });
     };
@@ -61,24 +59,35 @@ class Request extends Component {
         </Card>
         <Collapse in={collapse} timeout="auto" unmountOnExit>
           <Paper>
-            <List>
-              {pendingRequest.map((studentCard) => (
-                <ListItem key={studentCard}>
-                  <Tooltip title="Accept" placement="top">
-                    <Button onClick={() => this.handleAccept(studentCard)}>
-                      <Check />
-                    </Button>
-                  </Tooltip>
-                  <Tooltip title="Decline" placement="top">
-                    <Button onClick={() => this.handleDecline(studentCard)}>
-                      <Clear />
-                    </Button>
-                  </Tooltip>
-
-                  {studentCard}
-                </ListItem>
-              ))}
-            </List>
+            {loading ? (
+              <Typography variant="body2">Loading...</Typography>
+            ) : pendingRequest ? (
+              <List>
+                {pendingRequest.map((studentCard) => (
+                  <ListItem key={studentCard}>
+                    <Tooltip title="Accept" placement="top">
+                      <Button
+                        onClick={() => this.handleAccept(studentCard)}
+                        disabled={uiLoading}
+                      >
+                        <Check />
+                      </Button>
+                    </Tooltip>
+                    <Tooltip title="Decline" placement="top">
+                      <Button
+                        onClick={() => this.handleDecline(studentCard)}
+                        disabled={uiLoading}
+                      >
+                        <Clear />
+                      </Button>
+                    </Tooltip>
+                    {studentCard}
+                  </ListItem>
+                ))}
+              </List>
+            ) : (
+              <Typography variant="body2">No Request</Typography>
+            )}
           </Paper>
         </Collapse>
       </Fragment>
@@ -88,10 +97,14 @@ class Request extends Component {
 
 const mapStateToProps = (state) => ({
   pendingRequest: state.cca.pendingRequest,
+  loading: state.cca.loading,
+  UI: state.UI,
 });
 
 const mapActionsToProps = {
   getPendingRequest,
+  acceptRequest,
+  declineRequest,
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(Request);
