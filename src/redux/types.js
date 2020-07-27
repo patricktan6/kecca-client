@@ -17,4 +17,5 @@ export const CLEAR_ERRORS = "CLEAR_ERRORS";
 
 // Event reducer types
 export const SET_EVENTS = "SET_EVENTS";
+export const SET_EVENT = "SET_EVENT";
 export const LOADING_EVENT = "LOADING_EVENT";

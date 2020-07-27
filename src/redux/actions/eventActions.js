@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LOADING_UI, SET_EVENTS, LOADING_EVENT } from "../types";
+import { LOADING_UI, SET_EVENTS, LOADING_EVENT, SET_EVENT } from "../types";
 
 export const getParticipatedEvents = () => (dispatch) => {
   dispatch({ type: LOADING_EVENT });
@@ -65,6 +65,21 @@ export const getOrganisedEvents = () => (dispatch) => {
         },
       });
     });
+};
+
+export const getOneEvent = (eventId) => (dispatch) => {
+  axios
+    .get(`/events/${eventId}`)
+    .then((res) => {
+      const eventData = res.data;
+      dispatch({
+        type: SET_EVENT,
+        payload: {
+          event: eventData,
+        },
+      });
+    })
+    .catch((err) => console.log(err));
 };
 
 // export const createEvent = (eventData) => (dispatch) => {

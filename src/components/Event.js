@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 
 // Redux
 import { connect } from "react-redux";
+import { getOneEvent } from "../redux/actions/eventActions";
 
 const styles = {
   card: {
@@ -22,19 +23,25 @@ const styles = {
 };
 
 class Event extends Component {
+  componentDidMount() {
+    this.props.getOneEvent(this.props.eventId);
+  }
+
   render() {
     dayjs.extend(relativeTime);
     const {
       classes,
       event: {
-        name,
-        organiser,
-        cca,
-        duration,
-        dateTime,
-        createdAt,
-        listOfAttendees,
-        listOfAbsentees,
+        event: {
+          name,
+          organiser,
+          cca,
+          duration,
+          dateTime,
+          createdAt,
+          listOfAttendees,
+          listOfAbsentees,
+        },
       },
       status,
     } = this.props;
@@ -64,6 +71,14 @@ class Event extends Component {
 
 const mapStateToProps = (state) => ({
   status: state.user.adminStatus.tokenHeader,
+  event: state.event,
 });
 
-export default connect(mapStateToProps)(withStyles(styles)(Event));
+const mapActionsToProps = {
+  getOneEvent,
+};
+
+export default connect(
+  mapStateToProps,
+  mapActionsToProps
+)(withStyles(styles)(Event));

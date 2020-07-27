@@ -1,4 +1,4 @@
-import { SET_EVENTS, LOADING_EVENT } from "../types";
+import { SET_EVENTS, LOADING_EVENT, SET_EVENT } from "../types";
 
 const initialState = {
   events: [],
@@ -9,6 +9,12 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
     case SET_EVENTS:
+      return {
+        ...state,
+        ...action.payload,
+        loading: false,
+      };
+    case SET_EVENT:
       return {
         ...state,
         ...action.payload,
