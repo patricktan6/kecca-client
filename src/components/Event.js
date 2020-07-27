@@ -66,7 +66,6 @@ class Event extends Component {
       },
       status,
       loading,
-      UI: { loading: uiLoading },
     } = this.props;
     const { collapse1, collapse2 } = this.state;
 
@@ -115,9 +114,8 @@ class Event extends Component {
                   )}
                 </Paper>
               </Collapse>
-              <Typography variant="h6">{listOfAbsentees}</Typography>
               <CardActions>
-                <Typography variant="button">Attendees</Typography>
+                <Typography variant="button">Absentees</Typography>
                 <IconButton
                   className={!collapse2 ? classes.expand : classes.expandOpen}
                   onClick={handleClick2}
