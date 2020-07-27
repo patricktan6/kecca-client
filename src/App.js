@@ -6,7 +6,7 @@ import axios from "axios";
 import PrivateRoute from "./util/PrivateRoute";
 
 // Pages
-import Home from "./pages/home";
+import home from "./pages/home";
 import login from "./pages/login";
 import signup from "./pages/signup";
 import admin from "./pages/admin";
@@ -61,7 +61,7 @@ function App() {
           <Navbar />
           <div className="container">
             <Switch>
-              <PrivateRoute exact path="/" component={Home} />
+              <PrivateRoute exact path="/" component={home} />
               <AuthRoute exact path="/login" component={login} />
               <AuthRoute exact path="/signup" component={signup} />
               <PrivateRoute exact path="/admin" component={admin} />
