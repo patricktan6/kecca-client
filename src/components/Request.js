@@ -4,6 +4,8 @@ import axios from "axios";
 // Redux
 import { connect } from "react-redux";
 import { getPendingRequest } from "../redux/actions/ccaActions";
+
+// Material-UI
 import {
   Collapse,
   List,
@@ -20,31 +22,22 @@ class Request extends Component {
   constructor() {
     super();
     this.state = {
-      pendingRequest: [],
       collapse: false,
     };
-  }
-
-  componentDidMount() {
-    axios
-      .get("/request")
-      .then((res) => {
-        this.setState({ pendingRequest: res.data });
-      })
-      .catch((err) => console.log(err));
   }
 
   handleClick = (studentCard) => {
     axios
       .post("/cca/accept", { studentCard })
       .then((res) => {
-        this.props.history.push("/cca");
+        this.props.getPendingRequest();
       })
       .catch((err) => console.log(err));
   };
 
   render() {
-    const { pendingRequest, collapse } = this.state;
+    const { collapse } = this.state;
+    const { pendingRequest } = this.props;
     const handleClick = () => {
       this.setState({ collapse: !collapse });
     };
@@ -60,11 +53,7 @@ class Request extends Component {
             <List>
               {pendingRequest.map((studentCard) => (
                 <ListItem key={studentCard}>
-                  <Button
-                    name="acceptRequest"
-                    value={studentCard}
-                    onClick={() => this.handleClick(studentCard)}
-                  >
+                  <Button onClick={() => this.handleClick(studentCard)}>
                     <Check />
                   </Button>
                   {studentCard}

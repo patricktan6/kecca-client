@@ -9,6 +9,10 @@ import Request from "../components/Request";
 // Material-UI
 import Grid from "@material-ui/core/Grid";
 
+// Redux
+import { connect } from "react-redux";
+import { getPendingRequest } from "../redux/actions/ccaActions";
+
 class cca extends Component {
   constructor() {
     super();
@@ -26,6 +30,8 @@ class cca extends Component {
         });
       })
       .catch((err) => console.log(err));
+
+    this.props.getPendingRequest();
   }
 
   render() {
@@ -51,4 +57,12 @@ class cca extends Component {
   }
 }
 
-export default cca;
+const mapStateToProps = (state) => ({
+  pendingRequest: state.cca.pendingRequest,
+});
+
+const mapActionsToProps = {
+  getPendingRequest,
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(cca);
