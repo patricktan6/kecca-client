@@ -45,7 +45,7 @@ class cca extends Component {
     const handleClick = () => {
       this.setState({ collapse: !collapse });
     };
-    console.log(events);
+
     return (
       <Fragment>
         <Grid container spacing={3} direction="row">
