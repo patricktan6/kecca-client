@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import jwtDecode from "jwt-decode";
 import axios from "axios";
@@ -12,6 +12,7 @@ import signup from "./pages/signup";
 import admin from "./pages/admin";
 import join from "./pages/join";
 import cca from "./pages/cca";
+import event from "./pages/event";
 
 // Components
 import Navbar from "./components/Navbar";
@@ -66,6 +67,7 @@ function App() {
               <PrivateRoute exact path="/admin" component={admin} />
               <PrivateRoute exact path="/join" component={join} />
               <PrivateRoute exact path="/cca" component={cca} />
+              <Route exact path="/new_event" component={event} />
             </Switch>
           </div>
         </Router>

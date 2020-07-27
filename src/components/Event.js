@@ -44,9 +44,9 @@ class Event extends Component {
         <CardContent className={classes.content}>
           <Typography variant="h5">{name}</Typography>
           <Typography variant="h6">{dateTime}</Typography>
-          <Typography variant="h6">{organiser}</Typography>
-          <Typography variant="h6">{cca}</Typography>
-          <Typography variant="h6">{duration}</Typography>
+          <Typography variant="h6">Organiser: {organiser}</Typography>
+          <Typography variant="h6">CCA: {cca}</Typography>
+          <Typography variant="h6">Duration: {duration} hour(s)</Typography>
           {status === "Admin " && (
             <Fragment>
               <Typography variant="h6">{listOfAttendees}</Typography>

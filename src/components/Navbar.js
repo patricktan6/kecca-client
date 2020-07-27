@@ -32,9 +32,14 @@ class Navbar extends Component {
                   Admin
                 </Button>
               ) : (
-                <Button color="inherit" component={Link} to="/cca">
-                  CCA
-                </Button>
+                <Fragment>
+                  <Button color="inherit" component={Link} to="/cca">
+                    CCA
+                  </Button>
+                  <Button color="inherit" component={Link} to="/new_event">
+                    New Event
+                  </Button>
+                </Fragment>
               )}
               <Button color="inherit" component={Link} to="/join">
                 Join
