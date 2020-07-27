@@ -43,14 +43,9 @@ const styles = {
 };
 
 class Event extends Component {
-
   state = {
     collapse1: false,
     collapse2: false,
-  }
-
-  componentDidMount() {
-    this.props.getOneEvent(this.props.eventId);
   }
 
   render() {
@@ -58,16 +53,14 @@ class Event extends Component {
     const {
       classes,
       event: {
-        event: {
-          name,
-          organiser,
-          cca,
-          duration,
-          dateTime,
-          createdAt,
-          listOfAttendees,
-          listOfAbsentees,
-        },
+        name,
+        organiser,
+        cca,
+        duration,
+        dateTime,
+        createdAt,
+        listOfAttendees,
+        listOfAbsentees,
       },
       status,
       loading,
@@ -159,7 +152,6 @@ class Event extends Component {
 
 const mapStateToProps = (state) => ({
   status: state.user.adminStatus.tokenHeader,
-  event: state.event,
 });
 
 const mapActionsToProps = {
