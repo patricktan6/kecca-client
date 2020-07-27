@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-import axios from "axios";
 
 // Components
 import Event from "../components/Event";
@@ -8,10 +7,6 @@ import Request from "../components/Request";
 
 // Material-UI
 import Grid from "@material-ui/core/Grid";
-
-// Redux
-import { connect } from "react-redux";
-import { getPendingRequest, getCCADetails } from "../redux/actions/ccaActions";
 import {
   Card,
   CardActionArea,
@@ -22,40 +17,29 @@ import {
   ListItem,
 } from "@material-ui/core";
 
+// Redux
+import { connect } from "react-redux";
+import { getPendingRequest, getCCADetails } from "../redux/actions/ccaActions";
+import { getOrganisedEvents } from "../redux/actions/eventActions";
+
 class cca extends Component {
   constructor() {
     super();
     this.state = {
-      events: null,
       collapse: false,
     };
   }
 
   componentDidMount() {
-    axios
-      .get("/event/cca")
-      .then((res) => {
-        this.setState({
-          events: res.data,
-        });
-      })
-      .catch((err) => console.log(err));
-
+    this.props.getOrganisedEvents();
     this.props.getPendingRequest();
     this.props.getCCADetails();
   }
 
   render() {
-    let eventsMarkup = this.state.events ? (
-      this.state.events.map((event) => (
-        <Event key={event.eventId} event={event} />
-      ))
-    ) : (
-      <p>Loading... </p>
-    );
-
     const {
-      cca: { listOfMembers, loading },
+      cca: { listOfMembers, loading: ccaLoading },
+      event: { events, loading: eventLoading },
     } = this.props;
     const { collapse } = this.state;
     const handleClick = () => {
@@ -76,7 +60,7 @@ class cca extends Component {
               </Card>
               <Collapse in={collapse} timeout="auto" unmountOnExit>
                 <Paper>
-                  {loading ? (
+                  {ccaLoading ? (
                     <Typography variant="body2">Loading...</Typography>
                   ) : listOfMembers ? (
                     <List>
@@ -94,7 +78,15 @@ class cca extends Component {
             </Fragment>
           </Grid>
           <Grid item sm={8} xs={12}>
-            {eventsMarkup}
+            {eventLoading ? (
+              <Typography variant="body2">Loading...</Typography>
+            ) : events.length !== 0 ? (
+              events.map((event) => (
+                <Event key={event.eventId} eventId={event.eventId} />
+              ))
+            ) : (
+              <Typography variant="body2">No Events</Typography>
+            )}
           </Grid>
         </Grid>
       </Fragment>
@@ -104,11 +96,13 @@ class cca extends Component {
 
 const mapStateToProps = (state) => ({
   cca: state.cca,
+  event: state.event,
 });
 
 const mapActionsToProps = {
   getPendingRequest,
   getCCADetails,
+  getOrganisedEvents,
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(cca);

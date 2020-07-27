@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 
 // Components
 import Event from "../components/Event";
@@ -10,7 +9,7 @@ import Grid from "@material-ui/core/Grid";
 
 // Redux
 import { connect } from "react-redux";
-import { getEvents } from "../redux/actions/eventActions";
+import { getParticipatedEvents } from "../redux/actions/eventActions";
 import { Typography } from "@material-ui/core";
 
 class home extends Component {
@@ -20,7 +19,7 @@ class home extends Component {
   }
 
   componentDidMount() {
-    this.props.getEvents();
+    this.props.getParticipatedEvents();
   }
 
   render() {
@@ -37,7 +36,9 @@ class home extends Component {
           {loading ? (
             <Typography variant="body2">Loading...</Typography>
           ) : events.length !== 0 ? (
-            events.map((event) => <Event key={event.eventId} event={event} />)
+            events.map((event) => (
+              <Event key={event.eventId} eventId={event.eventId} />
+            ))
           ) : (
             <Typography variant="body2">No Events</Typography>
           )}
@@ -52,7 +53,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapActionsToProps = {
-  getEvents,
+  getParticipatedEvents,
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(home);
