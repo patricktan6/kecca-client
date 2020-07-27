@@ -4,8 +4,8 @@ import relativeTime from "dayjs/plugin/relativeTime";
 
 // Material-UI
 import { withStyles } from "@material-ui/core/styles";
-import IconButton from '@material-ui/core/IconButton';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import IconButton from "@material-ui/core/IconButton";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import transitions from "@material-ui/core/styles/transitions";
 import {
   Card,
@@ -31,43 +31,36 @@ const styles = {
     padding: 25,
   },
   expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: transitions.create('transform', {
+    transform: "rotate(0deg)",
+    marginLeft: "auto",
+    transition: transitions.create("transform", {
       duration: transitions.duration.shortest,
     }),
   },
   expandOpen: {
-    transform: 'rotate(180deg)',
+    transform: "rotate(180deg)",
   },
 };
 
 class Event extends Component {
-
   state = {
     collapse1: false,
     collapse2: false,
-  }
-
-  componentDidMount() {
-    this.props.getOneEvent(this.props.eventId);
-  }
+  };
 
   render() {
     dayjs.extend(relativeTime);
     const {
       classes,
       event: {
-        event: {
-          name,
-          organiser,
-          cca,
-          duration,
-          dateTime,
-          createdAt,
-          listOfAttendees,
-          listOfAbsentees,
-        },
+        name,
+        organiser,
+        cca,
+        duration,
+        dateTime,
+        createdAt,
+        listOfAttendees,
+        listOfAbsentees,
       },
       status,
       loading,
@@ -106,12 +99,10 @@ class Event extends Component {
                 <Paper>
                   {loading ? (
                     <Typography variant="body2">Loading...</Typography>
-                  ) : listOfAttendees ? (
+                  ) : listOfAttendees.length !== 0 ? (
                     <List>
                       {listOfAttendees.map((studentCard) => (
-                        <ListItem key={studentCard}>
-                          {studentCard}
-                        </ListItem>
+                        <ListItem key={studentCard}>{studentCard}</ListItem>
                       ))}
                     </List>
                   ) : (
@@ -136,9 +127,7 @@ class Event extends Component {
                   ) : listOfAbsentees ? (
                     <List>
                       {listOfAbsentees.map((studentCard) => (
-                        <ListItem key={studentCard}>
-                          {studentCard}
-                        </ListItem>
+                        <ListItem key={studentCard}>{studentCard}</ListItem>
                       ))}
                     </List>
                   ) : (
@@ -159,7 +148,6 @@ class Event extends Component {
 
 const mapStateToProps = (state) => ({
   status: state.user.adminStatus.tokenHeader,
-  event: state.event,
 });
 
 const mapActionsToProps = {
