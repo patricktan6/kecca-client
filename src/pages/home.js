@@ -10,54 +10,37 @@ import Grid from "@material-ui/core/Grid";
 
 // Redux
 import { connect } from "react-redux";
+import { getEvents } from "../redux/actions/eventActions";
+import { Typography } from "@material-ui/core";
 
 class home extends Component {
   constructor() {
     super();
-    this.state = {
-      events: null,
-    };
+    this.state = {};
   }
 
   componentDidMount() {
-    const { status } = this.props;
-
-    if (status === "User ") {
-      axios
-        .get("/event/user")
-        .then((res) => {
-          this.setState({
-            events: res.data,
-          });
-        })
-        .catch((err) => console.log(err));
-    } else {
-      axios
-        .get("/event/admin")
-        .then((res) => {
-          this.setState({
-            events: res.data,
-          });
-        })
-        .catch((err) => console.log(err));
-    }
+    this.props.getEvents();
   }
 
   render() {
-    let eventsMarkup = this.state.events ? (
-      this.state.events.map((event) => (
-        <Event key={event.eventId} event={event} />
-      ))
-    ) : (
-      <p>Loading... </p>
-    );
+    const {
+      event: { events, loading },
+    } = this.props;
+
     return (
       <Grid container spacing={3} direction="row">
         <Grid item sm={3} xs={12}>
           <Profile />
         </Grid>
         <Grid item sm={8} xs={12}>
-          {eventsMarkup}
+          {loading ? (
+            <Typography variant="body2">Loading...</Typography>
+          ) : events.length !== 0 ? (
+            events.map((event) => <Event key={event.eventId} event={event} />)
+          ) : (
+            <Typography variant="body2">No Events</Typography>
+          )}
         </Grid>
       </Grid>
     );
@@ -65,7 +48,11 @@ class home extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  status: state.user.adminStatus.tokenHeader,
+  event: state.event,
 });
 
-export default connect(mapStateToProps)(home);
+const mapActionsToProps = {
+  getEvents,
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(home);
