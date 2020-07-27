@@ -91,7 +91,7 @@ class admin extends Component {
       classes,
       UI: { loading },
     } = this.props;
-    const { ccaList, errors } = this.state;
+    const { ccaList, errors, cca, token } = this.state;
     return (
       <Grid container className={classes.form}>
         <Grid item sm />
@@ -143,7 +143,7 @@ class admin extends Component {
               variant="contained"
               color="primary"
               className={classes.button}
-              disabled={loading}
+              disabled={loading || cca === "" || token === ""}
             >
               Become Admin
               {loading && (
