@@ -64,6 +64,7 @@ class Event extends Component {
       },
       status,
       loading,
+      location,
     } = this.props;
     const { collapse1, collapse2 } = this.state;
 
@@ -83,7 +84,7 @@ class Event extends Component {
           <Typography variant="h6">Organiser: {organiser}</Typography>
           <Typography variant="h6">CCA: {cca}</Typography>
           <Typography variant="h6">Duration: {duration} hour(s)</Typography>
-          {status === "Admin " && (
+          {status.tokenHeader === "Admin " && location.pathname === "/cca" && (
             <Fragment>
               <CardActions>
                 <Typography variant="button">Attendees</Typography>
@@ -147,7 +148,7 @@ class Event extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  status: state.user.adminStatus.tokenHeader,
+  status: state.user.adminStatus,
 });
 
 const mapActionsToProps = {
