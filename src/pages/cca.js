@@ -17,8 +17,8 @@ import {
   List,
   ListItem,
 } from "@material-ui/core";
-import IconButton from '@material-ui/core/IconButton';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import IconButton from "@material-ui/core/IconButton";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import transitions from "@material-ui/core/styles/transitions";
 
 // Redux
@@ -28,14 +28,18 @@ import { getOrganisedEvents } from "../redux/actions/eventActions";
 
 const styles = {
   expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: transitions.create('transform', {
+    transform: "rotate(0deg)",
+    marginLeft: "auto",
+    transition: transitions.create("transform", {
       duration: transitions.duration.shortest,
     }),
   },
   expandOpen: {
-    transform: 'rotate(180deg)',
+    transform: "rotate(180deg)",
+  },
+  member: {
+    textAlign: "center",
+    margin: "auto",
   },
 };
 
@@ -73,7 +77,9 @@ class cca extends Component {
             <Fragment>
               <Card button onClick={handleClick}>
                 <CardActions>
-                  <Typography variant="button">Members</Typography>
+                  <Typography variant="button" className={classes.member}>
+                    Members
+                  </Typography>
                   <IconButton
                     className={!collapse ? classes.expand : classes.expandOpen}
                     onClick={handleClick}
@@ -128,4 +134,7 @@ const mapActionsToProps = {
   getOrganisedEvents,
 };
 
-export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(cca));
+export default connect(
+  mapStateToProps,
+  mapActionsToProps
+)(withStyles(styles)(cca));
