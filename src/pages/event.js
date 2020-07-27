@@ -91,7 +91,7 @@ class event extends Component {
                   {!this.state.submitted ? (
                     <Fragment>
                       <img src={Icon} alt="KEVII Logo" className={classes.image} />
-                      <Typography variant="h2" className={classes.pageTitle}>
+                      <Typography variant="h3" className={classes.pageTitle}>
                         New Event
                       </Typography>
                       <form noValidate >
