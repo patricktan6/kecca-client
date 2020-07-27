@@ -81,7 +81,7 @@ class Request extends Component {
                         <Clear />
                       </Button>
                     </Tooltip>
-                    {studentCard}
+                    <Typography varian="body2">{studentCard}</Typography>
                   </ListItem>
                 ))}
               </List>

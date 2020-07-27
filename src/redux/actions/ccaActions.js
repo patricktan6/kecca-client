@@ -1,10 +1,10 @@
 import axios from "axios";
 import {
   SET_PENDING_REQUEST,
-  SET_ERRORS,
   LOADING_CCA,
   LOADING_UI,
   CLEAR_ERRORS,
+  SET_DETAIL,
 } from "../types";
 
 export const getPendingRequest = () => (dispatch) => {
@@ -48,6 +48,20 @@ export const declineRequest = (studentCard) => (dispatch) => {
     .then((res) => {
       dispatch(getPendingRequest());
       dispatch({ type: CLEAR_ERRORS });
+    })
+    .catch((err) => console.log(err));
+};
+
+export const getCCADetails = () => (dispatch) => {
+  dispatch({ type: LOADING_CCA });
+  axios
+    .get("/detail")
+    .then((res) => {
+      const ccaDetail = res.data;
+      dispatch({
+        type: SET_DETAIL,
+        payload: ccaDetail,
+      });
     })
     .catch((err) => console.log(err));
 };

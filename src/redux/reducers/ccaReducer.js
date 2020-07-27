@@ -1,8 +1,10 @@
-import { SET_PENDING_REQUEST, SET_ERRORS, LOADING_CCA } from "../types";
+import { SET_PENDING_REQUEST, LOADING_CCA, SET_DETAIL } from "../types";
 
 const initialState = {
   pendingRequest: null,
   loading: false,
+  name: "",
+  listOfMembers: null,
 };
 
 export default function (state = initialState, action) {
@@ -17,6 +19,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loading: true,
+      };
+    case SET_DETAIL:
+      return {
+        ...state,
+        ...action.payload,
+        loading: false,
       };
     default:
       return state;
